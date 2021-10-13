@@ -13,8 +13,8 @@ const updateSun = function (sun, left, bottom, today) {
   sun.setAttribute(
     "data-time",
     ("0" + today.getHours()).slice(-2) +
-      ":" +
-      ("0" + today.getMinutes()).slice(-2)
+    ":" +
+    ("0" + today.getMinutes()).slice(-2)
   );
 };
 
@@ -22,27 +22,21 @@ const nightMode = function () {
   document.querySelector("html").classList.add("is-night");
 };
 
-const dayMode = function () {
-  document.querySelector("html").classList.add("is-day");
-};
-
-const placeSunAndStartMoving = function (totalMinutes, sunrise, sunset) {
+const showSun = function (totalMinutes, sunrise, sunset) {
   let today = new Date();
   const sunriseDate = new Date(sunrise * 1000);
   let minutesSunUp =
     today.getHours() * 60 +
     today.getMinutes() -
     (sunriseDate.getHours() * 60 + sunriseDate.getMinutes());
-
   let now = new Date().toLocaleTimeString("nl-BE", {
     hour: "numeric",
     minute: "numeric",
+    second: "numeric",
   });
-  if (now > sunset || now < convertTime(sunrise)) {
-    nightMode();
-  } else {
-    dayMode();
-  }
+
+  if (now >= sunset || now <= convertTime(sunrise)) nightMode();
+  
 
   let percentage = (100 / totalMinutes) * minutesSunUp;
   let sunLeft = percentage;
@@ -51,9 +45,9 @@ const placeSunAndStartMoving = function (totalMinutes, sunrise, sunset) {
 
   htmlMinutesLeft.innerHTML = `${totalMinutes - minutesSunUp} minutes`;
 
-  const interval = setInterval(function(){
+  setInterval(function () {
     getLocation();
-  }, 60000);
+  }, (60-now.split(":")[2])*1000);
 };
 
 const showResult = function (obj) {
@@ -63,7 +57,7 @@ const showResult = function (obj) {
 
   let difference = new Date(obj.city.sunset * 1000 - obj.city.sunrise * 1000);
 
-  placeSunAndStartMoving(
+  showSun(
     difference.getHours() * 60 + difference.getMinutes(),
     obj.city.sunrise,
     convertTime(obj.city.sunset)
