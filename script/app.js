@@ -38,7 +38,7 @@ const placeSunAndStartMoving = function (totalMinutes, sunrise, sunset) {
     hour: "numeric",
     minute: "numeric",
   });
-  if (now > sunset || now < sunrise) {
+  if (now > sunset || now < convertTime(sunrise)) {
     nightMode();
   } else {
     dayMode();
