@@ -61,13 +61,13 @@ html {
 */
 
 ::-moz-selection {
-  background: red;
+  background: var(--color-front);
   color: white;
   text-shadow: none;
 }
 
 ::selection {
-  background: red;
+  background: var(--color-front);
   color: white;
   text-shadow: none;
 }
@@ -261,8 +261,16 @@ input::placeholder {
     ---
     Website main logo
 */
-
 .c-logo {
+  line-height: 16px;
+  font-size: 16px;
+  margin-bottom: auto;
+  margin-top: 32px;
+  display: flex;
+  align-items: center;
+  color: var(--color-front);
+  opacity: var(--muted-opacity);
+  gap: 8px;
 }
 
 /*
@@ -272,10 +280,14 @@ input::placeholder {
 */
 
 .c-sun {
+  height: 22px;
+  width: 22px;
+  fill: var(--color-front);
 }
 
-.c-logo .c-sun {
-}
+/* .c-logo .c-sun {
+    margin-right: 8px;
+} */
 
 /*
     Component: App
@@ -283,11 +295,68 @@ input::placeholder {
     Main app wrapper
 */
 
+.c-app {
+  min-height: 100vh;
+  max-width: 400px;
+  margin: 0px auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.c-app__summary {
+  font-size: 28px;
+  line-height: 40px;
+  color: var(--color-front);
+}
+
 /*
     Component: Horizon
     ---
     Horizon with sun visualisation
 */
+.c-horizon__line {
+  border-top: 1px solid var(--color-front);
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.c-horizon__time {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.c-horizon__sky-wrapper {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  padding: 22px 40px 0 0;
+}
+
+.c-horizon__sky {
+  position: relative;
+  height: 100%;
+}
+
+.c-horizon__sun {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  transform: translateY(22px);
+}
+
+.c-horizon__sun::before {
+  content: attr(data-time);
+  font-size: 12px;
+  line-height: 14px;
+  margin-bottom: 8px;
+  text-align: center;
+  display: block;
+}
 
 /*------------------------------------*\
 #UTILITIES
@@ -297,6 +366,9 @@ input::placeholder {
     Utilities: Mute
     Mute with opacity
 */
+.u-muted {
+  opacity: var(--muted-opacity);
+}
 
 /*------------------------------------*\
 #STATES
@@ -307,6 +379,10 @@ input::placeholder {
 */
 
 /* Night version: just switch the light and dark vars */
+.is-night {
+    --color-front: var(--color-light);
+    --color-back: var(--color-dark);
+}
 
 /*------------------------------------*\
 #MEDIA
