@@ -50,6 +50,10 @@ const placeSunAndStartMoving = function (totalMinutes, sunrise, sunset) {
   updateSun(htmlSun, sunLeft, sunBottom, today);
 
   htmlMinutesLeft.innerHTML = `${totalMinutes - minutesSunUp} minutes`;
+
+  const interval = setInterval(function(){
+    getLocation();
+  }, 60000);
 };
 
 const showResult = function (obj) {
